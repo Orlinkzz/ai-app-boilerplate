@@ -1,0 +1,4 @@
+# Aider otomatis membaca AGENTS.md sebagai konteks read-only
+read:
+  - AGENTS.md
+  - docs/ARCHITECTURE.md

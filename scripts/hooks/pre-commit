@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# Aktifkan dengan: make setup   (git config core.hooksPath scripts/hooks)
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+
+# 1. Blokir commit file .env (selain .env.example)
+blocked="$(git diff --cached --name-only --diff-filter=ACM \
+  | grep -E '(^|/)\.env(\..+)?$' | grep -v -E '(^|/)\.env\.example$' || true)"
+if [ -n "$blocked" ]; then
+  echo "DITOLAK: file env/secret akan di-commit:"; echo "$blocked"
+  echo "Keluarkan dengan: git reset HEAD <file>"
+  exit 1
+fi
+
+# 2. Jika AGENTS.md ikut di-commit, sync otomatis lalu stage hasilnya
+if git diff --cached --name-only | grep -qx 'AGENTS.md'; then
+  ./scripts/sync-ai-rules.sh >/dev/null
+  git add GEMINI.md .windsurfrules .clinerules .github/copilot-instructions.md .cursor/rules/project.mdc
+fi
+
+# 3. Pastikan tidak ada file rules yang usang
+./scripts/sync-ai-rules.sh --check >/dev/null || {
+  echo "DITOLAK: file rules AI tidak sinkron dengan AGENTS.md. Jalankan: make sync-ai"
+  exit 1
+}

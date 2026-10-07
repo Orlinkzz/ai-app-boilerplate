@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ai-rules:
+    name: AI rules sinkron
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: make check-ai
+
+  quality:
+    name: Lint & Test
+    if: ${{ !github.event.repository.is_template }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # TODO: setup runtime sesuai stack, contoh:
+      # - uses: actions/setup-node@v4
+      #   with: { node-version: 22, cache: npm }
+      # - uses: shivammathur/setup-php@v2
+      #   with: { php-version: '8.3' }
+      # - uses: actions/setup-python@v5
+      #   with: { python-version: '3.12' }
+      # - run: make setup   # install dependency
+      if: ${{ !github.event.repository.is_template }}
+
+      - run: make lint
+      - run: make test
