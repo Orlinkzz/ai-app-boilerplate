@@ -17,7 +17,7 @@ jobs:
     name: AI rules sinkron
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - run: make check-ai
 
   selftest:
@@ -25,7 +25,7 @@ jobs:
     if: ${{ github.repository == 'Orlinkzz/ai-app-boilerplate' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: ShellCheck
         run: shellcheck scripts/*.sh scripts/hooks/pre-commit tests/*.sh
       - run: make selftest
@@ -35,7 +35,7 @@ jobs:
     if: ${{ github.repository != 'Orlinkzz/ai-app-boilerplate' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # STACK-SETUP:START
       # TODO: setup runtime + install dependency. Diisi otomatis oleh: make init STACK=<nama>
