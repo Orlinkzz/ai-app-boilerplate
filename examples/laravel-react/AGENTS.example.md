@@ -1,29 +1,23 @@
-# AGENTS.md — Sumber Kebenaran untuk Semua AI Agent
+# AGENTS.md — Contoh terisi: Laravel + React
 
+> Ini hanya CONTOH pengisian (disalin dari template lalu disesuaikan).
 > File ini dibaca langsung oleh Codex, Cursor, Copilot, Windsurf, Cline, Aider, Jules, dan agent lain.
 > Claude Code dan Gemini CLI membacanya lewat baris import di `CLAUDE.md` dan `GEMINI.md`.
 > **Edit HANYA file ini.** Jika kamu mengaktifkan salinan legacy (`.ai-sync-targets`), jalankan `make sync-ai` setelahnya.
 
-<!-- TEMPLATE-NOTE:START — hapus blok ini setelah AGENTS.md diisi untuk proyekmu -->
-> **Catatan template:** repo ini adalah *template*. Bagian `<...>` di bawah adalah placeholder yang harus
-> diisi untuk proyekmu; sampai itu dilakukan, `make dev/test/lint/build` sengaja gagal.
-> Jika kamu AI agent yang diminta mengembangkan template ini sendiri (bukan sebuah aplikasi), abaikan
-> placeholder dan baca `README.md` serta `CONTRIBUTING.md`.
-<!-- TEMPLATE-NOTE:END -->
-
 ## Project
-- Nama: ai-app-boilerplate
-- Tujuan: <1 kalimat: masalah apa, untuk siapa>
+- Nama: Contoh Aplikasi Inventaris
+- Tujuan: membantu tim toko kecil mencatat stok barang dan melihat barang yang hampir habis
 - Status: MVP
 
 ## Tech Stack
-- Backend: <isi, mis. Laravel / Bun+Hono / FastAPI>
-- Frontend: <isi, mis. React / Next.js>
-- Database: <isi, mis. PostgreSQL>
-- Test: <isi, mis. Pest / Vitest / Pytest>
+- Backend: Laravel (PHP), REST API dengan Sanctum untuk auth
+- Frontend: React (Vite) di `resources/js/`
+- Database: PostgreSQL (MySQL juga bisa)
+- Test: Pest/PHPUnit (backend), Vitest (frontend)
 
 ## Perintah Penting
-Semua perintah lewat `make` (isi implementasinya di `Makefile`, jaga agar tetap sinkron dengan bagian ini):
+Semua perintah lewat `make` (lihat `Makefile.example` untuk isinya):
 - Setup (hook + dependency): `make setup`
 - Dev: `make dev`
 - Test: `make test`
@@ -33,10 +27,14 @@ Semua perintah lewat `make` (isi implementasinya di `Makefile`, jaga agar tetap 
 
 ## Struktur Proyek
 ```
-src/        kode aplikasi
-tests/      test
-docs/       PRD, arsitektur, keputusan, daftar task
-prompts/    template prompt reusable
+app/Http/Controllers/   controller tipis, logika di service/action
+app/Http/Requests/      validasi (Form Request)
+app/Models/             model Eloquent
+app/Policies/           otorisasi
+routes/api.php          endpoint API
+resources/js/           aplikasi React
+tests/                  Feature & Unit test
+docs/                   PRD, arsitektur, keputusan, daftar task
 ```
 
 ## Alur Kerja Wajib
@@ -70,3 +68,13 @@ prompts/    template prompt reusable
 
 ## Jika Tidak Yakin
 Bertanya lebih baik daripada menebak. Sebutkan asumsi secara eksplisit di jawaban.
+
+## Konvensi Laravel + React
+- Validasi selalu lewat Form Request, jangan di controller.
+- Otorisasi lewat Policy/Gate; jangan hanya mengandalkan sembunyi tombol di UI.
+- Pakai API Resource untuk bentuk respons; jangan mengembalikan model mentah.
+- Lindungi dari mass assignment: definisikan `$fillable`, hindari `$guarded = []`.
+- Query N+1: gunakan eager loading (`with()`), tambahkan test untuk endpoint list.
+- Migration: jangan edit migration yang sudah dijalankan; buat migration baru.
+- React: komponen fungsional + hooks, state server lewat satu pustaka (mis. TanStack Query), bukan `useEffect` + `fetch` berulang.
+- Jangan simpan token di `localStorage` tanpa pertimbangan keamanan yang dicatat di `docs/DECISIONS.md`.

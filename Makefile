@@ -1,5 +1,5 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup dev test lint build sync-ai check-ai
+.PHONY: help setup dev test lint build sync-ai check-ai selftest
 
 help:
 	@echo "Target tersedia:"
@@ -8,8 +8,9 @@ help:
 	@echo "  make test      Jalankan test"
 	@echo "  make lint      Jalankan linter/formatter check"
 	@echo "  make build     Build untuk production"
-	@echo "  make sync-ai   Generate file rules semua AI dari AGENTS.md"
-	@echo "  make check-ai  Verifikasi file rules AI sinkron (dipakai CI)"
+	@echo "  make sync-ai   Perbarui salinan legacy yang aktif (.ai-sync-targets); stub dibuat bila hilang"
+	@echo "  make check-ai  Verifikasi stub & salinan legacy sinkron dengan AGENTS.md (dipakai CI)"
+	@echo "  make selftest  Tes mandiri script sync & hook (untuk maintainer template)"
 
 # Hook git: aman dijalankan berulang
 setup:
@@ -37,3 +38,6 @@ sync-ai:
 
 check-ai:
 	@bash scripts/sync-ai-rules.sh --check
+
+selftest:
+	@bash tests/test-sync.sh

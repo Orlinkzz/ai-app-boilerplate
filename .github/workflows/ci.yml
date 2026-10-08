@@ -20,6 +20,16 @@ jobs:
       - uses: actions/checkout@v4
       - run: make check-ai
 
+  selftest:
+    name: Selftest script (hanya repo template)
+    if: ${{ github.repository == 'Orlinkzz/ai-app-boilerplate' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck
+        run: shellcheck scripts/*.sh scripts/hooks/pre-commit tests/*.sh
+      - run: make selftest
+
   quality:
     name: Lint & Test
     if: ${{ github.repository != 'Orlinkzz/ai-app-boilerplate' }}

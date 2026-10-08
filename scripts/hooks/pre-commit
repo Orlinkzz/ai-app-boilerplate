@@ -12,14 +12,16 @@ if [ -n "$blocked" ]; then
   exit 1
 fi
 
-# 2. Jika AGENTS.md ikut di-commit, sync otomatis lalu stage hasilnya
+# 2. Jika AGENTS.md ikut di-commit, sync otomatis lalu stage salinan legacy yang aktif (.ai-sync-targets)
 if git diff --cached --name-only | grep -qx 'AGENTS.md'; then
   bash scripts/sync-ai-rules.sh >/dev/null
-  git add GEMINI.md .windsurfrules .clinerules .github/copilot-instructions.md .cursor/rules/project.mdc
+  bash scripts/sync-ai-rules.sh --list | while IFS= read -r f; do
+    if [ -n "$f" ]; then git add -- "$f"; fi
+  done
 fi
 
 # 3. Pastikan tidak ada file rules yang usang
 bash scripts/sync-ai-rules.sh --check >/dev/null || {
-  echo "DITOLAK: file rules AI tidak sinkron dengan AGENTS.md. Jalankan: make sync-ai"
+  echo "DITOLAK: instruksi AI tidak sinkron dengan AGENTS.md. Jalankan: make sync-ai"
   exit 1
 }

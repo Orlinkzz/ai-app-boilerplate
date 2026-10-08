@@ -1,23 +1,24 @@
 # AI App Boilerplate
 
+[![CI](https://github.com/Orlinkzz/ai-app-boilerplate/actions/workflows/ci.yml/badge.svg)](https://github.com/Orlinkzz/ai-app-boilerplate/actions/workflows/ci.yml)
+
+> *One `AGENTS.md`, many AI coding tools.* A template for AI-assisted app development
+> (Claude Code, Codex, Cursor, Copilot, Gemini CLI, Windsurf, Cline, Aider). Documentation is in Indonesian.
+
 Template repo untuk memulai aplikasi dengan **AI-assisted development** yang tidak terkunci ke satu tool.
 Satu aturan (`AGENTS.md`), dibaca oleh banyak AI.
 
-## Tool yang Didukung
+## Tool yang Ditargetkan
 
-| Tool | File yang dibaca | Sumber |
+| Tool | Cara membaca instruksi | Di repo ini |
 |---|---|---|
-| Claude Code | `CLAUDE.md` (import `AGENTS.md`) | langsung |
-| OpenAI Codex, Jules, Copilot agent | `AGENTS.md` | langsung |
-| Aider | `.aider.conf.yml` -> `AGENTS.md` | langsung |
-| Gemini CLI | `GEMINI.md` | generated |
-| GitHub Copilot | `.github/copilot-instructions.md` | generated |
-| Cursor | `.cursor/rules/project.mdc` | generated |
-| Windsurf | `.windsurfrules` | generated |
-| Cline / Roo Code | `.clinerules` | generated |
+| Codex, Jules, Cursor, Windsurf, Cline, GitHub Copilot | membaca `AGENTS.md` langsung (bergantung versi) | tidak perlu file tambahan |
+| Claude Code | hanya membaca `CLAUDE.md` | `CLAUDE.md` berisi `@AGENTS.md` |
+| Gemini CLI | membaca `GEMINI.md` | `GEMINI.md` berisi `@./AGENTS.md` |
+| Aider | konfigurasi `read:` | `.aider.conf.yml` merujuk ke `AGENTS.md` |
 
-> Nama file tiap tool bisa berubah seiring versi. Cek dokumentasi tool yang kamu pakai; jika berubah,
-> cukup ubah daftar `TARGETS` di `scripts/sync-ai-rules.sh`.
+> Tabel ini disusun dari dokumentasi tiap tool dan **belum diuji langsung di semua tool**.
+> Jika ada yang tidak bekerja, buka issue.
 
 ## Mulai Cepat
 
@@ -27,9 +28,8 @@ Satu aturan (`AGENTS.md`), dibaca oleh banyak AI.
 git clone https://github.com/Orlinkzz/ai-app-boilerplate.git nama-app && cd nama-app && rm -rf .git && git init
 
 # 1. Isi AGENTS.md (nama, stack) dan cek nama pemilik di LICENSE
-# 2. Aktifkan hook + sync rules
+# 2. Aktifkan git hook
 make setup
-make sync-ai
 # 3. Isi target dev/test/lint/build di Makefile
 ```
 
@@ -39,20 +39,27 @@ make sync-ai
 |---|---|
 | `make setup` | Aktifkan git hook (+ tempat install dependency) |
 | `make dev` / `test` / `lint` / `build` | Placeholder. **Sengaja gagal** sampai kamu isi, agar CI tidak hijau palsu |
-| `make sync-ai` | Generate file rules semua AI dari `AGENTS.md` |
-| `make check-ai` | Verifikasi file rules sinkron (mendeteksi usang dan hilang) |
+| `make sync-ai` | Perbarui salinan legacy yang aktif di `.ai-sync-targets` (dan buat stub yang hilang) |
+| `make check-ai` | Verifikasi stub `CLAUDE.md`/`GEMINI.md` dan salinan legacy aktif (mendeteksi usang dan hilang) |
+| `make selftest` | Tes mandiri script sync dan hook (untuk maintainer template) |
 
 ## Pengaman Otomatis
 
 **Pre-commit hook** (aktif setelah `make setup`):
 1. Menolak commit file `.env` / `.env.*` (kecuali `.env.example`)
-2. Jika `AGENTS.md` ikut di-commit, otomatis sync dan stage file hasil generate
-3. Menolak commit jika file rules usang
+2. Jika `AGENTS.md` ikut di-commit dan ada salinan legacy aktif, otomatis sync dan stage salinannya
+3. Menolak commit jika stub tidak valid atau salinan legacy usang
 
 **CI** (`.github/workflows/ci.yml`), dua job:
 - `ai-rules`: `make check-ai`
+- `selftest`: ShellCheck + `make selftest`. **Hanya jalan di repo template ini**, bukan di repo turunan.
 - `quality`: `make lint` dan `make test`. Akan merah sampai kamu mengisi Makefile dan setup runtime di workflow.
   Itu disengaja: task pertama (T-001) adalah membuatnya hijau.
+
+## Contoh Pengisian
+
+Lihat [`examples/laravel-react/`](examples/laravel-react/) untuk `AGENTS.md` dan `Makefile` yang sudah terisi
+(belum diuji di proyek sungguhan, gunakan sebagai titik awal).
 
 ## Alur Kerja
 
@@ -66,30 +73,34 @@ make sync-ai
 
 Prompt di `prompts/` bisa dipakai di AI mana pun (chat, IDE, CLI), cukup copy-paste.
 
-## Catatan Kompatibilitas Tool
+## Salinan Legacy (opsional)
 
-Berdasarkan dokumentasi resmi tiap tool (dicek Oktober 2026; konvensi bisa berubah, selalu cek dokumentasinya):
+Versi tool yang lebih lama mungkin belum membaca `AGENTS.md`. Untuk itu `.ai-sync-targets` menyediakan daftar
+salinan opsional, **semuanya nonaktif secara default**: `.cursor/rules/project.mdc`,
+`.github/copilot-instructions.md`, `.windsurfrules`, dan `.clinerules`.
 
-- **Claude Code** hanya membaca `CLAUDE.md`, karena itu file ini berisi `@AGENTS.md`.
-- **Gemini CLI** memakai `GEMINI.md` sebagai default, dan bisa membaca `AGENTS.md` lewat setting `context.fileName`.
-- **Windsurf** kini memakai `.windsurf/rules/*.md` dan juga membaca `AGENTS.md` langsung. `.windsurfrules` adalah format lama.
-- **Cline** merekomendasikan folder `.clinerules/` dan juga membaca `AGENTS.md`. Jika `.clinerules` ada, ia diprioritaskan.
-- **Cursor, GitHub Copilot, Codex, Aider, Jules** membaca `AGENTS.md` secara langsung (dukungan bergantung versi).
+Aktifkan dengan menghapus tanda `#` di barisnya, lalu jalankan `make sync-ai`. Catatan dari dokumentasi tool
+(dicek Oktober 2026; konvensi bisa berubah):
 
-Artinya file hasil generate bersifat **cadangan untuk versi tool yang lebih lama**. Di tool yang sudah membaca
-`AGENTS.md`, salinan itu bisa membuat instruksi yang sama termuat dua kali. Jika kamu hanya memakai versi terbaru,
-hapus entri yang tidak perlu dari `TARGETS` di `scripts/sync-ai-rules.sh` (dan dari `.gitattributes` serta hook).
+- Windsurf kini memakai `.windsurf/rules/*.md`; `.windsurfrules` adalah format lama.
+- Cline merekomendasikan folder `.clinerules/`; jika `.clinerules` ada, ia diprioritaskan di atas `AGENTS.md`.
+- Di tool yang sudah membaca `AGENTS.md`, salinan bisa membuat instruksi yang sama termuat dua kali.
 
 ## Menambah Tool Baru
 
-Tambahkan satu entri di array `TARGETS` pada `scripts/sync-ai-rules.sh`, lalu `make sync-ai`.
-Tambahkan juga path-nya di `.gitattributes` dan di `git add` pada `scripts/hooks/pre-commit`.
+Tool yang sudah membaca `AGENTS.md` tidak perlu apa-apa. Jika butuh file sendiri, tambahkan sebagai baris
+dikomentari di `.ai-sync-targets`. Untuk format khusus (mis. frontmatter), ubah fungsi `render()` di
+`scripts/sync-ai-rules.sh` dan tambahkan skenario tes di `tests/test-sync.sh`.
 
 ## Catatan
 
 - Hook bisa dilewati dengan `git commit --no-verify`, tapi CI tetap menangkapnya.
 - Versi action di CI (`actions/checkout@v4`) perlu diperbarui berkala.
 - Lisensi default MIT. Ganti jika proyekmu tertutup/komersial.
+
+## Kontribusi
+
+Lihat [CONTRIBUTING.md](CONTRIBUTING.md), [SECURITY.md](SECURITY.md), dan [CHANGELOG.md](CHANGELOG.md).
 
 ## Prinsip
 

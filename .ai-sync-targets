@@ -1,0 +1,12 @@
+# Salinan AGENTS.md untuk versi tool LAMA yang belum membaca AGENTS.md.
+#
+# Secara default semuanya NONAKTIF. Tool terbaru (Cursor, GitHub Copilot, Windsurf, Cline, Codex,
+# Aider, Jules) membaca AGENTS.md langsung, dan salinan bisa membuat instruksi yang sama termuat dua kali.
+#
+# Untuk mengaktifkan: hapus tanda # di depan barisnya, lalu jalankan `make sync-ai`.
+# Satu path relatif per baris. Tidak boleh AGENTS.md/CLAUDE.md/GEMINI.md atau path di luar repo.
+
+#.cursor/rules/project.mdc
+#.github/copilot-instructions.md
+#.windsurfrules
+#.clinerules

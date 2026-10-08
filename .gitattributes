@@ -2,8 +2,7 @@
 *.sh text eol=lf
 scripts/hooks/* text eol=lf
 
-# File hasil generate: diringkas di diff/PR GitHub
-GEMINI.md linguist-generated=true
+# Salinan legacy (opsional, lihat .ai-sync-targets): diringkas di diff/PR GitHub
 .windsurfrules linguist-generated=true
 .clinerules linguist-generated=true
 .github/copilot-instructions.md linguist-generated=true
