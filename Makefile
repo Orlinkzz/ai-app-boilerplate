@@ -33,7 +33,7 @@ build:
 	@echo "[TODO] 'make build' belum dikonfigurasi. Isi di Makefile dan samakan dengan AGENTS.md." >&2; exit 1
 
 sync-ai:
-	@./scripts/sync-ai-rules.sh
+	@bash scripts/sync-ai-rules.sh
 
 check-ai:
-	@./scripts/sync-ai-rules.sh --check
+	@bash scripts/sync-ai-rules.sh --check

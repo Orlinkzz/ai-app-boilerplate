@@ -21,10 +21,12 @@ Satu aturan (`AGENTS.md`), dibaca oleh banyak AI.
 
 ## Mulai Cepat
 
+**Prasyarat:** `git`, `make`, dan `bash`. Di Windows gunakan **WSL** atau **Git Bash**.
+
 ```bash
 git clone https://github.com/Orlinkzz/ai-app-boilerplate.git nama-app && cd nama-app && rm -rf .git && git init
 
-# 1. Isi AGENTS.md (nama, stack) dan ganti orlinkzz di LICENSE
+# 1. Isi AGENTS.md (nama, stack) dan cek nama pemilik di LICENSE
 # 2. Aktifkan hook + sync rules
 make setup
 make sync-ai
@@ -63,6 +65,20 @@ make sync-ai
 7. Keputusan penting dicatat di `docs/DECISIONS.md`
 
 Prompt di `prompts/` bisa dipakai di AI mana pun (chat, IDE, CLI), cukup copy-paste.
+
+## Catatan Kompatibilitas Tool
+
+Berdasarkan dokumentasi resmi tiap tool (dicek Oktober 2026; konvensi bisa berubah, selalu cek dokumentasinya):
+
+- **Claude Code** hanya membaca `CLAUDE.md`, karena itu file ini berisi `@AGENTS.md`.
+- **Gemini CLI** memakai `GEMINI.md` sebagai default, dan bisa membaca `AGENTS.md` lewat setting `context.fileName`.
+- **Windsurf** kini memakai `.windsurf/rules/*.md` dan juga membaca `AGENTS.md` langsung. `.windsurfrules` adalah format lama.
+- **Cline** merekomendasikan folder `.clinerules/` dan juga membaca `AGENTS.md`. Jika `.clinerules` ada, ia diprioritaskan.
+- **Cursor, GitHub Copilot, Codex, Aider, Jules** membaca `AGENTS.md` secara langsung (dukungan bergantung versi).
+
+Artinya file hasil generate bersifat **cadangan untuk versi tool yang lebih lama**. Di tool yang sudah membaca
+`AGENTS.md`, salinan itu bisa membuat instruksi yang sama termuat dua kali. Jika kamu hanya memakai versi terbaru,
+hapus entri yang tidak perlu dari `TARGETS` di `scripts/sync-ai-rules.sh` (dan dari `.gitattributes` serta hook).
 
 ## Menambah Tool Baru
 
