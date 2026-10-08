@@ -22,7 +22,7 @@ jobs:
 
   quality:
     name: Lint & Test
-    if: ${{ !github.event.repository.is_template }}
+    if: ${{ github.repository != 'Orlinkzz/ai-app-boilerplate' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
