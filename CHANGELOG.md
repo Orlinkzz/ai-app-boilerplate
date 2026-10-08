@@ -13,7 +13,10 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/), versi mengikut
 - CI: `ai-rules`, `quality`, dan `selftest` (hanya di repo template)
 - `tests/test-sync.sh` dan ShellCheck di CI
 - `docs/` (PRD, arsitektur, keputusan, task), `prompts/` (7 prompt), perintah `.claude/commands/`
-- `examples/laravel-react/`, `CONTRIBUTING.md`, `SECURITY.md`, Dependabot untuk GitHub Actions
+- `stacks/`: template bun, nodejs, react, vue, svelte, go, laravel-react, diterapkan lewat `make init STACK=<nama>`
+- `tests/test-init.sh` dan `tests/e2e-stacks.sh` (e2e manual dengan toolchain asli)
+- `CONTRIBUTING.md`, `SECURITY.md`, Dependabot untuk GitHub Actions
+- Target `make deps`, `make init`, `make stacks`; `make setup` kini = `hooks` + `deps`
 
 ### Changed
 - Salinan file rules per tool tidak lagi dibuat secara default, karena tool terbaru membaca `AGENTS.md` langsung

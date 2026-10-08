@@ -1,10 +1,7 @@
-# Contoh target Makefile untuk Laravel + React. Sesuaikan dengan proyekmu.
-
-setup:
-	git config core.hooksPath scripts/hooks
-	chmod +x scripts/hooks/* scripts/*.sh
-	composer install
-	npm ci
+# Stack: Laravel + React
+deps:
+	composer install --no-interaction --prefer-dist
+	@if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 dev:
 	npm run dev   # jalankan 'php artisan serve' di terminal lain

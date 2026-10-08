@@ -1,0 +1,17 @@
+# Stack: Vue 3 (Vite + TypeScript)
+deps:
+	@if [ -f package-lock.json ]; then npm ci; else npm install; fi
+
+dev:
+	npm run dev
+
+test:
+	npm run test:unit -- --run
+
+lint:
+	npm run type-check
+	npx oxlint .
+	npx eslint .
+
+build:
+	npm run build-only

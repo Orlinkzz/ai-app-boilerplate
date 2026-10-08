@@ -1,0 +1,15 @@
+# Stack: Bun + TypeScript
+deps:
+	bun install
+
+dev:
+	bun --hot src/index.ts
+
+test:
+	bun test
+
+lint:
+	bunx tsc --noEmit
+
+build:
+	bun build src/index.ts --outdir dist --target bun

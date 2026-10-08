@@ -27,18 +27,25 @@ Satu aturan (`AGENTS.md`), dibaca oleh banyak AI.
 ```bash
 git clone https://github.com/Orlinkzz/ai-app-boilerplate.git nama-app && cd nama-app && rm -rf .git && git init
 
-# 1. Isi AGENTS.md (nama, stack) dan cek nama pemilik di LICENSE
-# 2. Aktifkan git hook
+# 1. Pilih stack (disarankan)
+make stacks
+make init STACK=react
+
+# 2. Isi AGENTS.md (nama, tujuan), cek nama pemilik di LICENSE
+# 3. Aktifkan git hook
 make setup
-# 3. Isi target dev/test/lint/build di Makefile
+
+# Tanpa stack: isi sendiri target deps/dev/test/lint/build di Makefile
 ```
 
 ## Perintah `make`
 
 | Perintah | Fungsi |
 |---|---|
-| `make setup` | Aktifkan git hook (+ tempat install dependency) |
-| `make dev` / `test` / `lint` / `build` | Placeholder. **Sengaja gagal** sampai kamu isi, agar CI tidak hijau palsu |
+| `make setup` | Aktifkan git hook, lalu `make deps` |
+| `make deps` | Install dependency (terisi oleh `make init`) |
+| `make stacks` / `make init STACK=<nama>` | Daftar / terapkan template stack |
+| `make dev` / `test` / `lint` / `build` | Placeholder. **Sengaja gagal** sampai kamu isi (atau `make init`), agar CI tidak hijau palsu |
 | `make sync-ai` | Perbarui salinan legacy yang aktif di `.ai-sync-targets` (dan buat stub yang hilang) |
 | `make check-ai` | Verifikasi stub `CLAUDE.md`/`GEMINI.md` dan salinan legacy aktif (mendeteksi usang dan hilang) |
 | `make selftest` | Tes mandiri script sync dan hook (untuk maintainer template) |
@@ -52,14 +59,18 @@ make setup
 
 **CI** (`.github/workflows/ci.yml`), dua job:
 - `ai-rules`: `make check-ai`
-- `selftest`: ShellCheck + `make selftest`. **Hanya jalan di repo template ini**, bukan di repo turunan.
+- `selftest`: ShellCheck + `make selftest` (tes sync, hook, dan template stack). **Hanya jalan di repo template ini**, bukan di repo turunan.
 - `quality`: `make lint` dan `make test`. Akan merah sampai kamu mengisi Makefile dan setup runtime di workflow.
-  Itu disengaja: task pertama (T-001) adalah membuatnya hijau.
+  Itu disengaja: task pertama (T-001) adalah membuatnya hijau. `make init` mengisi setup runtime-nya otomatis.
 
-## Contoh Pengisian
+## Template Stack
 
-Lihat [`examples/laravel-react/`](examples/laravel-react/) untuk `AGENTS.md` dan `Makefile` yang sudah terisi
-(belum diuji di proyek sungguhan, gunakan sebagai titik awal).
+Pilih stack dan terapkan dalam satu perintah: `make init STACK=<nama>`.
+
+Tersedia: **bun, nodejs, react, vue, svelte, go, laravel-react**. Perintah `make init` mengisi `AGENTS.md`,
+target `Makefile`, dan setup CI sekaligus. Detail, status uji, dan cara menambah stack ada di
+[`stacks/README.md`](stacks/README.md). Enam stack pertama sudah diuji end-to-end dengan toolchain asli;
+`laravel-react` belum.
 
 ## Alur Kerja
 

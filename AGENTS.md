@@ -7,6 +7,7 @@
 <!-- TEMPLATE-NOTE:START — hapus blok ini setelah AGENTS.md diisi untuk proyekmu -->
 > **Catatan template:** repo ini adalah *template*. Bagian `<...>` di bawah adalah placeholder yang harus
 > diisi untuk proyekmu; sampai itu dilakukan, `make dev/test/lint/build` sengaja gagal.
+> Pilih stack dengan `make stacks` lalu `make init STACK=<nama>`.
 > Jika kamu AI agent yang diminta mengembangkan template ini sendiri (bukan sebuah aplikasi), abaikan
 > placeholder dan baca `README.md` serta `CONTRIBUTING.md`.
 <!-- TEMPLATE-NOTE:END -->

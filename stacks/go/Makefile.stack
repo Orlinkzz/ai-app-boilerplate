@@ -1,0 +1,16 @@
+# Stack: Go (HTTP service)
+deps:
+	go mod download
+
+dev:
+	go run ./cmd/app
+
+test:
+	go test ./...
+
+lint:
+	go vet ./...
+	@test -z "$$(gofmt -l .)" || { echo "File belum diformat (jalankan: gofmt -w .):"; gofmt -l .; exit 1; }
+
+build:
+	go build -o bin/app ./cmd/app

@@ -37,14 +37,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # TODO: setup runtime sesuai stack, contoh:
+      # STACK-SETUP:START
+      # TODO: setup runtime + install dependency. Diisi otomatis oleh: make init STACK=<nama>
+      # Contoh manual:
       # - uses: actions/setup-node@v4
-      #   with: { node-version: 22, cache: npm }
-      # - uses: shivammathur/setup-php@v2
-      #   with: { php-version: '8.3' }
-      # - uses: actions/setup-python@v5
-      #   with: { python-version: '3.12' }
-      # - run: make setup   # install dependency
+      #   with: { node-version: lts/*, cache: npm }
+      # - run: make deps
+      # STACK-SETUP:END
 
       - run: make lint
       - run: make test

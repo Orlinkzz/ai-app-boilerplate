@@ -13,7 +13,7 @@ Terima kasih sudah mau membantu. Repo ini kecil dan sengaja sederhana.
 ```bash
 make setup       # aktifkan git hook
 make check-ai    # stub CLAUDE.md/GEMINI.md valid & salinan legacy (jika aktif) sinkron
-make selftest    # tes mandiri script sync & hook
+make selftest    # tes mandiri script sync, hook, dan template stack
 shellcheck scripts/*.sh scripts/hooks/pre-commit tests/*.sh
 ```
 
@@ -28,6 +28,16 @@ CI menjalankan hal yang sama. Job `Lint & Test` memang tidak jalan di repo templ
 3. Perbarui tabel dan catatan kompatibilitas di `README.md`.
 
 Jangan menambah klaim "didukung" untuk tool yang belum kamu coba atau belum terdokumentasi.
+
+## Menambah atau mengubah template stack
+
+Lihat `stacks/README.md`. Perubahan pada perintah sebuah stack sebaiknya diverifikasi dengan proyek nyata:
+
+```bash
+bash tests/e2e-stacks.sh react   # contoh; butuh jaringan dan toolchain stack tersebut
+```
+
+Sebutkan versi toolchain yang kamu pakai di deskripsi PR.
 
 ## Melaporkan bug
 
