@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>AI App Boilerplate: Satu AGENTS.md untuk Banyak AI Coding Tool</title>
+<meta name="description" content="Template repo AI-assisted development: satu AGENTS.md dibaca Claude Code, Codex, Cursor, Copilot, Gemini CLI. Tutorial, template stack, dan CI siap pakai.">
+<meta name="keywords" content="AGENTS.md, AI coding, Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, boilerplate, template repo, AI-assisted development">
+<meta name="author" content="Orlinkzz">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="theme-color" content="#f6f2e9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1017" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light dark">
+<link rel="canonical" href="https://orlinkzz.github.io/ai-app-boilerplate/">
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AI App Boilerplate">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="AI App Boilerplate: Satu AGENTS.md untuk Banyak AI Coding Tool">
+<meta property="og:description" content="Template repo AI-assisted development dengan tutorial langkah demi langkah, template stack (Bun, Node.js, React, Vue, Svelte, Go), dan CI.">
+<meta property="og:url" content="https://orlinkzz.github.io/ai-app-boilerplate/">
+<meta property="og:image" content="https://orlinkzz.github.io/ai-app-boilerplate/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AI App Boilerplate: satu AGENTS.md untuk semua AI coding tool">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AI App Boilerplate: Satu AGENTS.md untuk Banyak AI Coding Tool">
+<meta name="twitter:description" content="Template repo AI-assisted development dengan tutorial, template stack, dan CI.">
+<meta name="twitter:image" content="https://orlinkzz.github.io/ai-app-boilerplate/og-image.png">
+<meta name="twitter:image:alt" content="AI App Boilerplate: satu AGENTS.md untuk semua AI coding tool">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://orlinkzz.github.io/ai-app-boilerplate/#website",
+      "url": "https://orlinkzz.github.io/ai-app-boilerplate/",
+      "name": "AI App Boilerplate",
+      "description": "Tutorial dan dokumentasi template repo AI-assisted development berbasis AGENTS.md.",
+      "inLanguage": "id"
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://orlinkzz.github.io/ai-app-boilerplate/#code",
+      "name": "AI App Boilerplate",
+      "description": "Template repo dengan satu AGENTS.md sebagai sumber aturan untuk banyak AI coding tool, lengkap dengan template stack, git hook, dan CI.",
+      "codeRepository": "https://github.com/Orlinkzz/ai-app-boilerplate",
+      "programmingLanguage": "Shell",
+      "license": "https://opensource.org/licenses/MIT",
+      "author": { "@type": "Person", "name": "Orlinkzz", "url": "https://github.com/Orlinkzz" },
+      "inLanguage": "id"
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Apa itu AGENTS.md dan kenapa dipakai?",
+          "acceptedAnswer": { "@type": "Answer", "text": "AGENTS.md adalah file instruksi proyek untuk AI coding agent. Dengan satu file sebagai sumber, kamu tidak perlu menulis aturan yang sama berulang-ulang untuk tiap tool. Banyak tool membacanya langsung. Claude Code membacanya lewat CLAUDE.md yang berisi @AGENTS.md, dan Gemini CLI lewat GEMINI.md yang berisi @./AGENTS.md." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah template ini bekerja di semua AI tool?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Template ini dirancang berdasarkan dokumentasi resmi tiap tool, tetapi belum diuji langsung di semuanya. Dukungan juga bergantung versi tool. Jika ada yang tidak bekerja, buka issue di repository." }
+        },
+        {
+          "@type": "Question",
+          "name": "Kenapa make lint dan make test gagal setelah saya clone?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Itu disengaja. Target dev, test, lint, dan build gagal sampai kamu mengisinya, supaya CI tidak hijau palsu. Jalankan make init STACK=nama-stack untuk mengisinya otomatis, atau isi Makefile sendiri." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah bisa dipakai di Windows?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Bisa, dengan WSL atau Git Bash, karena template memakai make dan bash. Di Windows izin eksekusi script bisa hilang saat commit; perbaiki dengan git update-index --chmod=+x pada file script." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apakah saya wajib memakai stack yang tersedia?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tidak. Template stack hanya mempercepat awal. Kamu bisa mengisi target di Makefile dan bagian stack di AGENTS.md sendiri untuk stack apa pun." }
+        },
+        {
+          "@type": "Question",
+          "name": "Bagaimana dengan versi tool AI yang lama?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Versi lama yang belum membaca AGENTS.md bisa memakai salinan opsional. Aktifkan barisnya di file .ai-sync-targets lalu jalankan make sync-ai." }
+        },
+        {
+          "@type": "Question",
+          "name": "Apa lisensinya?",
+          "acceptedAnswer": { "@type": "Answer", "text": "MIT. Kamu bebas memakai, mengubah, dan mendistribusikannya, termasuk untuk proyek komersial." }
+        }
+      ]
+    }
+  ]
+}
+</script>
+
+<script>document.documentElement.classList.add('js');setTimeout(function(){document.documentElement.classList.add('anim-failsafe')},5000);</script>
+<style>
+:root{
+  --bg:#f6f2e9; --fg:#1c1e24; --muted:#575b6a; --card:#fcfaf5; --line:#e1dac9;
+  --accent:#4f46e5; --accent-fg:#ffffff; --accent-soft:#e9e6f4;
+  --code-bg:#0f1220; --code-fg:#e6e8f2; --ok:#0f766e; --warn:#a34708; --warn-bg:#fbefdb; --note-bg:#eeeadd;
+  --radius:12px; --maxw:960px;
+  --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+/* @media (prefers-color-scheme: dark){
+  :root{
+    --bg:#0e1017; --fg:#e8eaf2; --muted:#9aa1b5; --card:#151826; --line:#262b3d;
+    --accent:#8b8cf8; --accent-fg:#0e1017; --accent-soft:#1d2040;
+    --code-bg:#080a12; --code-fg:#e6e8f2; --ok:#5eead4; --warn:#fbbf24; --warn-bg:#2a2110; --note-bg:#171c33;
+  }
+} */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.65;font-size:17px}
+a{color:var(--accent)}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:0;background:var(--accent);color:var(--accent-fg);padding:.6rem 1rem;z-index:100}
+.skip:focus{left:8px;top:8px}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 20px}
+
+header.site{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid var(--line)}
+header.site .wrap{display:flex;align-items:center;gap:16px;min-height:56px;flex-wrap:wrap}
+.brand{font-weight:700;color:var(--fg);text-decoration:none;display:flex;align-items:center;gap:8px}
+.brand svg{width:22px;height:22px}
+nav ul{display:flex;gap:4px;list-style:none;margin:0;padding:0;flex-wrap:wrap}
+nav a{display:block;padding:6px 10px;border-radius:8px;text-decoration:none;color:var(--muted);font-size:15px;transition:background-color .2s ease,color .2s ease}
+nav a:hover{background:var(--accent-soft);color:var(--fg)}
+nav a[aria-current]{background:var(--accent-soft);color:var(--fg)}
+.gh{margin-left:auto}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:10px;font-weight:600;text-decoration:none;border:1px solid var(--accent);background:var(--accent);color:var(--accent-fg)}
+.btn{transition:transform .15s ease,box-shadow .15s ease,background-color .15s ease}
+.btn:hover{transform:translateY(-1px);box-shadow:0 4px 14px color-mix(in srgb,var(--accent) 28%,transparent)}
+.btn:active{transform:translateY(0);box-shadow:none}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.sm{padding:6px 12px;font-size:14px}
+
+.hero{padding:64px 0 40px}
+.eyebrow{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--accent);background:var(--accent-soft);padding:4px 10px;border-radius:999px}
+h1{font-size:clamp(2rem,5vw,3.2rem);line-height:1.15;margin:16px 0 14px;letter-spacing:-.02em}
+.lead{font-size:1.15rem;color:var(--muted);max-width:42em;margin:0 0 24px}
+.cta{display:flex;gap:12px;flex-wrap:wrap}
+
+section{padding:44px 0;border-top:1px solid var(--line);scroll-margin-top:72px}
+.hero{scroll-margin-top:72px}
+h2{font-size:1.7rem;line-height:1.25;margin:0 0 12px;letter-spacing:-.01em}
+h3{font-size:1.15rem;margin:0 0 6px}
+p{margin:0 0 14px}
+.sub{color:var(--muted);max-width:46em}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin-top:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px}
+.card p:last-child{margin-bottom:0}
+
+.table-wrap{overflow-x:auto;margin:16px 0;border:1px solid var(--line);border-radius:var(--radius);background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{background:var(--accent-soft);font-weight:600}
+td code,li code,p code{font-family:var(--mono);font-size:.9em;background:var(--accent-soft);padding:1px 6px;border-radius:6px}
+
+.codeblock{position:relative;margin:12px 0 16px}
+pre{margin:0;background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border-radius:var(--radius);overflow-x:auto;font-family:var(--mono);font-size:14.5px;line-height:1.55}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+.codeblock pre{padding-right:96px}
+.copy{position:absolute;top:8px;right:8px;display:inline-flex;align-items:center;gap:6px;font:600 12px var(--sans);padding:5px 10px 5px 8px;border-radius:8px;border:1px solid #394063;background:#1a1f36;color:#dfe3f5;cursor:pointer;transition:background-color .15s ease,border-color .15s ease}
+.copy:hover{background:#252b4a}
+.copy .ico{width:14px;height:14px;flex:none}
+.copy .tick{stroke-dasharray:16;stroke-dashoffset:16}
+.copy .clip{transition:opacity .15s ease}
+.copy.ok{border-color:#2dd4bf;color:#99f6e4}
+.copy.ok .clip{opacity:0}
+.copy.ok .tick{stroke-dashoffset:0;transition:stroke-dashoffset .28s ease-out}
+.c{color:#7f88a8}
+
+ol.steps{list-style:none;counter-reset:s;margin:20px 0 0;padding:0;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+ol.steps>li{min-width:0;counter-increment:s;position:relative;padding:18px 18px 18px 64px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius)}
+ol.steps>li::before{content:counter(s);position:absolute;left:16px;top:16px;width:34px;height:34px;border-radius:50%;background:var(--accent);color:var(--accent-fg);font-weight:700;display:grid;place-items:center}
+ol.steps h3{margin-bottom:8px}
+ol.steps .codeblock:last-child{margin-bottom:0}
+
+.callout{border-radius:10px;padding:12px 16px;margin:14px 0;border:1px solid var(--line);background:var(--note-bg)}
+.callout.warn{background:var(--warn-bg);border-color:color-mix(in srgb,var(--warn) 40%,transparent)}
+.callout strong{display:block;margin-bottom:2px}
+.ok{color:var(--ok);font-weight:600}
+.warnt{color:var(--warn);font-weight:600}
+
+details{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:4px 16px;margin:10px 0}
+summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"";flex:none;width:8px;height:8px;margin-right:4px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg) translate(-2px,-2px);transition:transform .22s ease}
+details[open] summary::after{transform:rotate(-135deg) translate(-2px,-2px)}
+details[open] summary{border-bottom:1px solid var(--line);margin-bottom:10px}
+@supports selector(::details-content){
+  details{interpolate-size:allow-keywords}
+  details::details-content{block-size:0;overflow:clip;transition:block-size .25s ease,content-visibility .25s allow-discrete}
+  details[open]::details-content{block-size:auto}
+}
+
+footer{border-top:1px solid var(--line);padding:32px 0 48px;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;gap:16px 28px;flex-wrap:wrap;justify-content:space-between}
+footer ul{list-style:none;margin:0;padding:0;display:flex;gap:16px;flex-wrap:wrap}
+@media (max-width:640px){section,.hero{scroll-margin-top:112px}body{font-size:16px}.hero{padding-top:40px}nav{width:100%;order:3}ol.steps>li{padding:16px 14px 16px 14px;padding-top:62px}ol.steps>li::before{left:14px;top:14px}}
+
+.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+:root{--wire:#cbc4b0}
+@media (prefers-color-scheme: dark){:root{--wire:#383f5e}}
+
+/* ---------- Diagram: tulis sekali, dibaca banyak tool ---------- */
+.fan{margin:40px 0 0}
+.fan-body{display:grid;grid-template-columns:auto 1fr;align-items:center}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px}
+.fan-src{position:relative;display:grid;gap:2px;justify-items:start;border-color:var(--accent);margin-right:30px}
+.fan-src svg{width:20px;height:20px;color:var(--accent)}
+.fan-src strong{font-family:var(--mono);font-size:1.05rem}
+.fan-src span{color:var(--muted);font-size:.85rem}
+.fan-src::after{content:"";position:absolute;left:100%;top:50%;width:30px;height:2px;margin-top:-1px;background:var(--wire);transform-origin:left center}
+.fan-rows{list-style:none;margin:0;padding:0}
+.row{position:relative;display:flex;align-items:center;padding:7px 0}
+.row::before{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--wire)}
+.row:first-child::before{top:50%}
+.row:last-child::before{bottom:50%}
+.wire{position:relative;flex:1 1 36px;min-width:36px;height:2px;background:var(--wire);transform-origin:left center}
+.bridge{flex:0 0 188px;display:grid;justify-items:center;gap:1px;text-align:center;padding:6px 10px;border:1px dashed var(--wire);border-radius:10px;background:var(--bg)}
+.bridge code{font-size:.82rem;background:none;padding:0}
+.bridge small{font-size:.74rem;color:var(--muted)}
+.bridge.dim{border-style:dotted}
+.tool{flex:0 0 250px;display:flex;flex-wrap:wrap;gap:1px 10px;font-size:.95rem}
+.tool b{font-weight:600}
+.pulse{position:absolute;left:0;top:50%;width:9px;height:9px;margin-top:-4.5px;border-radius:50%;background:var(--accent);opacity:0;pointer-events:none}
+.fan figcaption{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin-top:16px;color:var(--muted);font-size:.95rem}
+.btns{display:flex;flex-wrap:wrap;gap:8px}
+.linkbtn{font:600 13px var(--sans);color:var(--accent);background:transparent;border:1px solid var(--line);border-radius:8px;padding:5px 11px;cursor:pointer;transition:background-color .15s ease,border-color .15s ease}
+.linkbtn:hover{background:var(--accent-soft);border-color:var(--accent)}
+.fan.lit .tool,.fan.lit .fan-src{background:var(--accent-soft);border-color:var(--accent)}
+@media (max-width:699px){
+  .fan-body{grid-template-columns:1fr}
+  .fan-src{margin:0 0 22px 0;width:max-content}
+  .fan-src::after{left:26px;top:100%;width:2px;height:22px;margin:0;transform-origin:center top}
+  .fan-rows{margin-left:26px}
+  .row:first-child::before{top:0}
+  .row{display:grid;grid-template-columns:22px 1fr;grid-template-areas:"w b" "w t";align-items:center;row-gap:4px;padding:9px 0}
+  .row .wire{grid-area:w;min-width:0;width:22px}
+  .row .wire.w2{display:none}
+  .bridge{grid-area:b;flex:none;justify-self:start;grid-template-columns:auto auto;gap:2px 8px;text-align:left;padding:4px 10px}
+  .bridge.dim{grid-template-columns:auto}
+  .tool{grid-area:t;flex:none}
+}
+
+/* ---------- Terminal ---------- */
+.term{margin:12px 0 16px}
+.term>figcaption{font-size:.8rem;color:var(--muted);margin:0 0 4px 2px}
+.term pre{font-size:14px}
+.term .cmd{display:block}
+.term .prompt{color:#8b8cf8;user-select:none}
+.term .typed{display:inline-block;overflow:hidden;white-space:pre;vertical-align:top;width:21ch}
+.term .ln{display:block;min-height:1.55em}
+.term .dim{color:#7f88a8}
+
+/* ---------- Rel progres tutorial ---------- */
+ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:32px;top:52px;bottom:-34px;width:2px;background:linear-gradient(var(--accent),var(--accent)) no-repeat 0 0/100% 0%,var(--wire)}
+.js ol.steps>li::before{background:var(--card);color:var(--muted);box-shadow:inset 0 0 0 2px var(--wire);transition:background-color .3s ease,color .3s ease,box-shadow .3s ease}
+.js ol.steps>li.is-active::before,.js ol.steps>li.is-done::before{background:var(--accent);color:var(--accent-fg);box-shadow:inset 0 0 0 2px var(--accent)}
+.js ol.steps>li:not(:last-child)::after{transition:background-size .55s ease}
+.js ol.steps>li.is-done:not(:last-child)::after{background-size:100% 100%,auto}
+@media (max-width:640px){ol.steps>li:not(:last-child)::after{display:none}}
+
+/* ---------- Gerakan (hanya jika pengguna tidak meminta gerak minimal) ---------- */
+@media (prefers-reduced-motion: no-preference){
+  /* keadaan awal: hanya aktif setelah skrip siap, dan dibatalkan oleh failsafe */
+  .js:not(.anim-failsafe) .fan:not(.play):not(.played) :is(.fan-src,.bridge,.tool){opacity:0}
+  .js:not(.anim-failsafe) .fan:not(.play):not(.played) .wire{transform:scaleX(0)}
+  .js:not(.anim-failsafe) .fan:not(.play):not(.played) .row::before{transform:scaleY(0)}
+  .js:not(.anim-failsafe) .fan:not(.play):not(.played) .fan-src::after{transform:scaleX(0)}
+  .js:not(.anim-failsafe) .term:not(.play) .typed{width:0}
+  .js:not(.anim-failsafe) .term:not(.play) .ln{opacity:0}
+
+  @keyframes nodeIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes growX{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes growY{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+  .fan.play .fan-src{animation:nodeIn .4s cubic-bezier(.2,.7,.2,1) both}
+  .fan.play .fan-src::after{animation:growX .25s ease-out .3s both}
+  .fan.play .row::before{animation:growY .3s ease-out .45s both;transform-origin:center}
+  .fan.play .wire{animation:growX .4s ease-out calc(.6s + var(--i)*.1s) both}
+  .fan.play .bridge{animation:fadeIn .3s ease-out calc(.95s + var(--i)*.1s) both}
+  .fan.play .wire.w2{animation-delay:calc(1s + var(--i)*.1s)}
+  .fan.play .tool{animation:nodeIn .4s cubic-bezier(.2,.7,.2,1) calc(1.35s + var(--i)*.1s) both}
+  @media (max-width:699px){
+    @keyframes growYtop{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+    .fan.play .fan-src::after{animation-name:growYtop}
+  }
+
+  @keyframes travel{0%{opacity:0;transform:translateX(0)}12%{opacity:1}88%{opacity:1}100%{opacity:0;transform:translateX(calc(var(--w) - 9px))}}
+  @keyframes flash{0%{background-color:var(--card);border-color:var(--line)}25%{background-color:var(--accent-soft);border-color:var(--accent)}100%{background-color:var(--card);border-color:var(--line)}}
+  @keyframes srcFlash{0%,100%{background-color:var(--card)}30%{background-color:var(--accent-soft)}}
+  .fan.pulsing .fan-src{animation:srcFlash .55s ease-out}
+  .fan.pulsing .wire:not(.w2) .pulse{animation:travel .45s ease-in-out calc(.35s + var(--i)*.1s) both}
+  .fan.pulsing .wire.w2 .pulse{animation:travel .4s ease-in-out calc(.85s + var(--i)*.1s) both}
+  .fan.pulsing .tool{animation:flash .95s ease-out calc(1.25s + var(--i)*.1s)}
+
+  @keyframes typing{from{width:0}to{width:21ch}}
+  @keyframes lnIn{from{opacity:0}to{opacity:1}}
+  .term.play .typed{animation:typing .5s steps(21,end) .15s both}
+  .term.play .ln{animation:lnIn .1s linear calc(.85s + var(--i)*.09s) both}
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:0s!important;animation:none!important}
+}
+</style>
+</head>
+
+<body>
+<a class="skip" href="#utama">Lewati ke konten utama</a>
+
+<header class="site">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="AI App Boilerplate, kembali ke atas">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#4f46e5"/><path d="M9 22l5-12 5 12M11 18h6" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23" cy="10" r="2.2" fill="#fff"/></svg>
+      AI App Boilerplate
+    </a>
+    <nav aria-label="Navigasi utama">
+      <ul>
+        <li><a href="#masalah">Masalah</a></li>
+        <li><a href="#mulai">Tutorial</a></li>
+        <li><a href="#stack">Stack</a></li>
+        <li><a href="#tool">Tool</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="btn sm gh" href="https://github.com/Orlinkzz/ai-app-boilerplate" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<main id="utama">
+  <div class="hero" id="top">
+    <div class="wrap">
+      <span class="eyebrow">Template repo &middot; MIT</span>
+      <h1>Satu <code style="font-family:var(--mono)">AGENTS.md</code> untuk banyak AI coding tool</h1>
+      <p class="lead">Mulai proyek dengan AI-assisted development tanpa menulis ulang aturan untuk tiap tool. Pilih stack, isi satu file instruksi, dan dapatkan git hook serta CI yang menjaganya tetap rapi.</p>
+      <div class="cta">
+        <a class="btn" href="https://github.com/Orlinkzz/ai-app-boilerplate/generate" rel="noopener">Use this template</a>
+        <a class="btn ghost" href="#mulai">Mulai tutorial</a>
+      </div>
+      <figure class="fan" id="fan">
+        <div class="fan-body" role="img" aria-label="Diagram: AGENTS.md dibaca langsung oleh Codex, Cursor, GitHub Copilot, Windsurf, Cline, dan Jules; lewat .aider.conf.yml oleh Aider; lewat CLAUDE.md yang berisi @AGENTS.md oleh Claude Code; lewat GEMINI.md yang berisi @./AGENTS.md oleh Gemini CLI.">
+          <div class="fan-src node">
+            <svg viewBox="0 0 20 20" aria-hidden="true" focusable="false"><path d="M5 2.5h6.5L15.5 6.5v11H5z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M11.5 2.5v4h4M7.5 11h5M7.5 14h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <strong>AGENTS.md</strong>
+            <span>ditulis sekali</span>
+          </div>
+          <ul class="fan-rows">
+            <li class="row" style="--i:0"><span class="wire"><b class="pulse"></b></span><span class="bridge dim"><small>tanpa file tambahan</small></span><span class="wire w2"><b class="pulse"></b></span><span class="tool node"><b>Codex</b><b>Cursor</b><b>Copilot</b><b>Windsurf</b><b>Cline</b><b>Jules</b></span></li>
+            <li class="row" style="--i:1"><span class="wire"><b class="pulse"></b></span><span class="bridge"><code>.aider.conf.yml</code><small>read: AGENTS.md</small></span><span class="wire w2"><b class="pulse"></b></span><span class="tool node"><b>Aider</b></span></li>
+            <li class="row" style="--i:2"><span class="wire"><b class="pulse"></b></span><span class="bridge"><code>CLAUDE.md</code><small>@AGENTS.md</small></span><span class="wire w2"><b class="pulse"></b></span><span class="tool node"><b>Claude Code</b></span></li>
+            <li class="row" style="--i:3"><span class="wire"><b class="pulse"></b></span><span class="bridge"><code>GEMINI.md</code><small>@./AGENTS.md</small></span><span class="wire w2"><b class="pulse"></b></span><span class="tool node"><b>Gemini CLI</b></span></li>
+          </ul>
+        </div>
+        <figcaption>
+          <span>Aturan ditulis sekali; tiap tool membacanya dengan caranya sendiri (bergantung versi).</span>
+          <span class="btns">
+            <button type="button" class="linkbtn" id="fan-sim">Simulasikan perubahan</button>
+            <button type="button" class="linkbtn" id="fan-replay">Putar ulang</button>
+          </span>
+          <span class="sr-only" id="fan-live" aria-live="polite"></span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <section id="masalah">
+    <div class="wrap">
+      <h2>Masalahnya: tiap AI tool punya file aturan sendiri</h2>
+      <p class="sub">Claude Code membaca <code>CLAUDE.md</code>, Gemini CLI membaca <code>GEMINI.md</code>, Cursor punya <code>.cursor/rules</code>, Copilot punya <code>copilot-instructions.md</code>. Menyalin aturan yang sama ke semuanya cepat berantakan.</p>
+      <div class="cols">
+        <div class="card"><h3>Satu sumber</h3><p>Semua aturan ditulis di <code>AGENTS.md</code>. Banyak tool membacanya langsung.</p></div>
+        <div class="card"><h3>Stub, bukan salinan</h3><p><code>CLAUDE.md</code> dan <code>GEMINI.md</code> hanya berisi baris import ke <code>AGENTS.md</code>, jadi tidak ada yang bisa melenceng.</p></div>
+        <div class="card"><h3>Dijaga otomatis</h3><p>Pre-commit hook dan CI memeriksa agar semuanya tetap sinkron dan tidak ada <code>.env</code> yang ikut ter-commit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mulai">
+    <div class="wrap">
+      <h2>Tutorial: dari nol sampai siap kerja dengan AI</h2>
+      <p class="sub">Delapan langkah. Semua perintah bisa disalin dengan tombol <em>Salin</em>.</p>
+
+      <ol class="steps">
+        <li>
+          <h3>Siapkan prasyarat</h3>
+          <p>Kamu butuh <code>git</code>, <code>make</code>, dan <code>bash</code>, plus toolchain untuk stack pilihanmu (Node.js, Bun, atau Go).</p>
+          <div class="callout"><strong>Pengguna Windows</strong>Gunakan WSL atau Git Bash. <code>make</code> dan script bash tidak jalan di PowerShell biasa.</div>
+        </li>
+        <li>
+          <h3>Buat repo dari template</h3>
+          <p>Cara termudah: klik <a href="https://github.com/Orlinkzz/ai-app-boilerplate/generate" rel="noopener">Use this template</a> di GitHub. Atau lewat terminal:</p>
+          <div class="codeblock"><pre><code>git clone https://github.com/Orlinkzz/ai-app-boilerplate.git nama-app
+cd nama-app
+rm -rf .git &amp;&amp; git init -b main</code></pre></div>
+        </li>
+        <li>
+          <h3>Pilih stack</h3>
+          <p>Lihat daftar stack, lalu terapkan salah satunya. Ini mengisi <code>AGENTS.md</code>, target <code>Makefile</code>, dan setup CI sekaligus.</p>
+          <div class="codeblock"><pre><code>make stacks
+make init STACK=react</code></pre></div>
+          <figure class="term" id="term">
+            <figcaption>Contoh output</figcaption>
+            <pre><code><span class="cmd"><span class="prompt">$ </span><span class="typed">make init STACK=react</span></span><span class="ln" style="--i:0">Stack 'react' diterapkan ke: AGENTS.md, Makefile, .github/workflows/ci.yml</span><span class="ln" style="--i:1"></span><span class="ln" style="--i:2">Langkah berikutnya:</span><span class="ln dim" style="--i:3">  1. Isi 'Nama' dan 'Tujuan' di AGENTS.md, lalu hapus blok TEMPLATE-NOTE</span><span class="ln dim" style="--i:4">  2. Buat proyeknya sesuai bagian 'Scaffold awal' di AGENTS.md</span><span class="ln dim" style="--i:5">  3. make setup &amp;&amp; make lint &amp;&amp; make test</span><span class="ln dim" style="--i:6">  4. make check-ai   (jika .ai-sync-targets aktif: make sync-ai dulu)</span><span class="ln dim" style="--i:7">  5. Opsional: hapus folder stacks/ dan scripts/init-stack.sh jika sudah tidak dipakai</span></code></pre>
+          </figure>
+          <p>Ingin melihat perubahannya dulu tanpa menulis apa pun?</p>
+          <div class="codeblock"><pre><code>bash scripts/init-stack.sh react --dry-run</code></pre></div>
+          <p>Perintah ini aman dijalankan ulang dan bisa dipakai untuk berganti stack. Tidak cocok dengan stack yang tersedia? Lewati langkah ini dan isi target <code>deps/dev/test/lint/build</code> di <code>Makefile</code> sendiri.</p>
+        </li>
+        <li>
+          <h3>Isi identitas proyek</h3>
+          <p>Buka <code>AGENTS.md</code>, isi <strong>Nama</strong> dan <strong>Tujuan</strong>, lalu hapus blok <code>TEMPLATE-NOTE</code>. Ganti nama pemilik di <code>LICENSE</code>.</p>
+        </li>
+        <li>
+          <h3>Aktifkan git hook</h3>
+          <div class="codeblock"><pre><code>make setup</code></pre></div>
+          <p>Hook akan menolak commit file <code>.env</code> dan memastikan stub <code>CLAUDE.md</code>/<code>GEMINI.md</code> tetap valid.</p>
+        </li>
+        <li>
+          <h3>Buat proyeknya</h3>
+          <p>Template tidak membuatkan kode aplikasi. Jalankan perintah scaffold untuk stack-mu (lihat tabel <a href="#stack">Stack</a>), lalu cek:</p>
+          <div class="codeblock"><pre><code>make lint
+make test
+make build</code></pre></div>
+          <div class="callout warn"><strong>Gagal itu normal di awal</strong>Target yang belum terisi sengaja gagal agar CI tidak hijau palsu. Untuk React dan Svelte, tambahkan Vitest dulu (<code>npm i -D vitest</code> dan script <code>"test": "vitest"</code>).</div>
+        </li>
+        <li>
+          <h3>Kerja bersama AI, satu task kecil sekali jalan</h3>
+          <p>Folder <code>prompts/</code> berisi tujuh prompt yang bisa disalin ke AI mana pun. Alurnya:</p>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Tahap</th><th>Prompt</th><th>Hasil</th></tr></thead>
+            <tbody>
+              <tr><td>PRD</td><td><code>01-review-prd.md</code></td><td>Kritik atas <code>docs/PRD.md</code></td></tr>
+              <tr><td>Arsitektur</td><td><code>02-design-architecture.md</code></td><td>Isi <code>docs/ARCHITECTURE.md</code></td></tr>
+              <tr><td>Rencana</td><td><code>03-plan-task.md</code></td><td>Rencana per task, <em>belum</em> menulis kode</td></tr>
+              <tr><td>Implementasi</td><td><code>04-implement-task.md</code></td><td>Kode + test sesuai rencana yang disetujui</td></tr>
+              <tr><td>Review</td><td><code>05-review-code.md</code></td><td>Temuan bug dan test yang kurang</td></tr>
+              <tr><td>Keamanan</td><td><code>06-security-audit.md</code></td><td>Audit berbasis OWASP Top 10</td></tr>
+              <tr><td>Debug</td><td><code>07-debug.md</code></td><td>Akar masalah, lalu perbaikan minimal</td></tr>
+            </tbody>
+          </table></div>
+          <p>Pecah pekerjaan di <code>docs/TASKS.md</code>. Satu task, satu sesi AI, satu commit kecil. Kamu tetap arsiteknya: baca dan review kode yang dihasilkan sebelum merge.</p>
+        </li>
+        <li>
+          <h3>Commit, push, dan biarkan CI bekerja</h3>
+          <div class="codeblock"><pre><code>git add -A
+git commit -m "chore: init project"
+git remote add origin &lt;url-repo-kamu&gt;
+git push -u origin main</code></pre></div>
+          <p>CI menjalankan <code>make check-ai</code> (aturan AI sinkron) dan <code>make lint</code> + <code>make test</code>.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section id="stack">
+    <div class="wrap">
+      <h2>Template stack</h2>
+      <p class="sub">Tujuh stack siap pakai. Status uji menunjukkan apakah perintahnya sudah dicoba pada proyek nyata dengan scaffold resmi (Node 22 + npm 12, Bun 1.4, Go 1.22).</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Stack</th><th>Scaffold awal</th><th>Status uji</th></tr></thead>
+        <tbody>
+          <tr><td><code>bun</code></td><td><code>bun init</code></td><td class="ok">Lolos e2e</td></tr>
+          <tr><td><code>nodejs</code></td><td><code>npm init -y</code></td><td class="ok">Lolos e2e (proyek minimal)</td></tr>
+          <tr><td><code>react</code></td><td><code>npm create vite@latest . -- --template react-ts</code></td><td class="ok">Lolos e2e</td></tr>
+          <tr><td><code>vue</code></td><td><code>npm create vue@latest</code></td><td class="ok">Lolos e2e</td></tr>
+          <tr><td><code>svelte</code></td><td><code>npx sv create .</code></td><td class="ok">Lolos e2e</td></tr>
+          <tr><td><code>go</code></td><td><code>go mod init</code> + <code>cmd/app/main.go</code></td><td class="ok">Lolos e2e</td></tr>
+          <!-- <tr><td><code>laravel-react</code></td><td><code>composer create-project laravel/laravel .</code></td><td class="warnt">Belum diuji (butuh PHP)</td></tr> -->
+        </tbody>
+      </table></div>
+      <p>Detail per stack dan cara menambah stack baru ada di <a href="https://github.com/Orlinkzz/ai-app-boilerplate/tree/main/stacks" rel="noopener"><code>stacks/README.md</code></a>.</p>
+    </div>
+  </section>
+
+  <section id="tool">
+    <div class="wrap">
+      <h2>Tool yang ditargetkan</h2>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Tool</th><th>Cara membaca instruksi</th><th>Di repo ini</th></tr></thead>
+        <tbody>
+          <tr><td>Codex, Jules, Cursor, Windsurf, Cline, GitHub Copilot</td><td>Membaca <code>AGENTS.md</code> langsung (bergantung versi)</td><td>Tidak perlu file tambahan</td></tr>
+          <tr><td>Claude Code</td><td>Hanya membaca <code>CLAUDE.md</code></td><td>Berisi <code>@AGENTS.md</code></td></tr>
+          <tr><td>Gemini CLI</td><td>Membaca <code>GEMINI.md</code></td><td>Berisi <code>@./AGENTS.md</code></td></tr>
+          <tr><td>Aider</td><td>Konfigurasi <code>read:</code></td><td><code>.aider.conf.yml</code> merujuk ke <code>AGENTS.md</code></td></tr>
+        </tbody>
+      </table></div>
+      <h3>Tool versi lama (opsional)</h3>
+      <p>Jika tool-mu belum membaca <code>AGENTS.md</code>, aktifkan salinan di <code>.ai-sync-targets</code> (hapus tanda <code>#</code> di barisnya), lalu:</p>
+      <div class="codeblock"><pre><code>make sync-ai
+make check-ai</code></pre></div>
+    </div>
+  </section>
+
+  <section id="pengaman">
+    <div class="wrap">
+      <h2>Pengaman otomatis</h2>
+      <div class="cols">
+        <div class="card"><h3>Pre-commit hook</h3><p>Menolak <code>.env</code>, menjaga stub tetap valid, dan menyinkronkan salinan legacy bila aktif. Bisa dilewati dengan <code>--no-verify</code>, tapi CI tetap menangkapnya.</p></div>
+        <div class="card"><h3>CI</h3><p>Job <code>ai-rules</code> memeriksa sinkronisasi. Job <code>quality</code> menjalankan lint dan test di repo turunan.</p></div>
+        <div class="card"><h3>Tes mandiri</h3><p><code>make selftest</code> menguji script sync, hook, dan semua template stack (untuk kontributor template).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <h2>Pertanyaan yang sering muncul</h2>
+      <details><summary>Apa itu AGENTS.md dan kenapa dipakai?</summary>
+        <p>AGENTS.md adalah file instruksi proyek untuk AI coding agent. Dengan satu file sebagai sumber, kamu tidak perlu menulis aturan yang sama berulang-ulang untuk tiap tool. Banyak tool membacanya langsung. Claude Code membacanya lewat <code>CLAUDE.md</code> yang berisi <code>@AGENTS.md</code>, dan Gemini CLI lewat <code>GEMINI.md</code> yang berisi <code>@./AGENTS.md</code>.</p></details>
+      <details><summary>Apakah template ini bekerja di semua AI tool?</summary>
+        <p>Template ini dirancang berdasarkan dokumentasi resmi tiap tool, tetapi belum diuji langsung di semuanya. Dukungan juga bergantung versi tool. Jika ada yang tidak bekerja, buka issue di repository.</p></details>
+      <details><summary>Kenapa make lint dan make test gagal setelah saya clone?</summary>
+        <p>Itu disengaja. Target <code>dev</code>, <code>test</code>, <code>lint</code>, dan <code>build</code> gagal sampai kamu mengisinya, supaya CI tidak hijau palsu. Jalankan <code>make init STACK=nama-stack</code> untuk mengisinya otomatis, atau isi <code>Makefile</code> sendiri.</p></details>
+      <details><summary>Apakah bisa dipakai di Windows?</summary>
+        <p>Bisa, dengan WSL atau Git Bash, karena template memakai <code>make</code> dan <code>bash</code>. Di Windows izin eksekusi script bisa hilang saat commit; perbaiki dengan <code>git update-index --chmod=+x</code> pada file script.</p></details>
+      <details><summary>Apakah saya wajib memakai stack yang tersedia?</summary>
+        <p>Tidak. Template stack hanya mempercepat awal. Kamu bisa mengisi target di <code>Makefile</code> dan bagian stack di <code>AGENTS.md</code> sendiri untuk stack apa pun.</p></details>
+      <details><summary>Bagaimana dengan versi tool AI yang lama?</summary>
+        <p>Versi lama yang belum membaca <code>AGENTS.md</code> bisa memakai salinan opsional. Aktifkan barisnya di file <code>.ai-sync-targets</code> lalu jalankan <code>make sync-ai</code>.</p></details>
+      <details><summary>Apa lisensinya?</summary>
+        <p>MIT. Kamu bebas memakai, mengubah, dan mendistribusikannya, termasuk untuk proyek komersial.</p></details>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong>AI App Boilerplate</strong><br>
+      Lisensi MIT &middot; dibuat oleh <a href="https://github.com/Orlinkzz" rel="noopener">Orlinkzz</a>
+    </div>
+    <ul aria-label="Tautan repository">
+      <li><a href="https://github.com/Orlinkzz/ai-app-boilerplate" rel="noopener">Repository</a></li>
+      <li><a href="https://github.com/Orlinkzz/ai-app-boilerplate/issues" rel="noopener">Issues</a></li>
+      <li><a href="https://github.com/Orlinkzz/ai-app-boilerplate/blob/main/CONTRIBUTING.md" rel="noopener">Kontribusi</a></li>
+      <li><a href="https://github.com/Orlinkzz/ai-app-boilerplate/blob/main/CHANGELOG.md" rel="noopener">Changelog</a></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var reduce = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
+  var hasIO = 'IntersectionObserver' in window;
+  var each = function (list, fn) { Array.prototype.forEach.call(list, fn); };
+  // Tanpa IntersectionObserver: tampilkan semuanya statis, tanpa keadaan awal tersembunyi
+  if (!hasIO) { root.classList.remove('js'); }
+
+  /* 1. Tombol salin dengan umpan balik centang */
+  var ICON = '<svg class="ico" viewBox="0 0 16 16" aria-hidden="true" focusable="false">' +
+    '<g class="clip" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5.5" y="5.5" width="8" height="8" rx="1.5"/>' +
+    '<path d="M10.5 3.5V3A1.5 1.5 0 0 0 9 1.5H4A1.5 1.5 0 0 0 2.5 3v5A1.5 1.5 0 0 0 4 9.5h.5"/></g>' +
+    '<path class="tick" d="M3.5 8.5l3 3 6-6.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  each(document.querySelectorAll('.codeblock'), function (block) {
+    var code = block.querySelector('code');
+    if (!code) return;
+    var btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'copy';
+    btn.innerHTML = ICON + '<span class="lbl">Salin</span>';
+    btn.setAttribute('aria-label', 'Salin perintah ke clipboard');
+    var lbl = btn.querySelector('.lbl');
+    var timer;
+    var done = function (ok) {
+      lbl.textContent = ok ? 'Tersalin' : 'Gagal';
+      btn.classList.toggle('ok', ok);
+      clearTimeout(timer);
+      timer = setTimeout(function () { lbl.textContent = 'Salin'; btn.classList.remove('ok'); }, 1600);
+    };
+    btn.addEventListener('click', function () {
+      var text = code.textContent;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () { done(true); }, function () { done(false); });
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = text; ta.setAttribute('readonly', '');
+        ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        var ok = false;
+        try { ok = document.execCommand('copy'); } catch (e) {}
+        document.body.removeChild(ta);
+        done(ok);
+      }
+    });
+    block.appendChild(btn);
+  });
+
+  /* 2. Diagram: masuk sekali saat terlihat, bisa diputar ulang, plus simulasi perubahan */
+  var fan = document.getElementById('fan');
+  if (fan) {
+    var live = document.getElementById('fan-live');
+    var wires = fan.querySelectorAll('.wire');
+    var timers = [];
+    var clear = function () { timers.forEach(clearTimeout); timers = []; };
+    var say = function (msg) { live.textContent = ''; setTimeout(function () { live.textContent = msg; }, 60); };
+    var playIn = function () {
+      clear();
+      fan.classList.remove('played', 'pulsing', 'lit');
+      void fan.offsetWidth;
+      fan.classList.add('play');
+      timers.push(setTimeout(function () { fan.classList.remove('play'); fan.classList.add('played'); }, 2000));
+    };
+    var simulate = function () {
+      clear();
+      say('Simulasi: satu perubahan di AGENTS.md, semua tool membacanya dari sumber yang sama.');
+      if (reduce) {
+        fan.classList.add('lit');
+        timers.push(setTimeout(function () { fan.classList.remove('lit'); }, 1400));
+        return;
+      }
+      fan.classList.remove('play', 'pulsing');
+      fan.classList.add('played');
+      each(wires, function (w) { w.style.setProperty('--w', w.clientWidth + 'px'); });
+      void fan.offsetWidth;
+      fan.classList.add('pulsing');
+      timers.push(setTimeout(function () { fan.classList.remove('pulsing'); }, 2800));
+    };
+    document.getElementById('fan-sim').addEventListener('click', simulate);
+    document.getElementById('fan-replay').addEventListener('click', function () {
+      if (reduce) { say('Gerakan dinonaktifkan oleh pengaturan sistem kamu.'); return; }
+      playIn();
+    });
+    if (hasIO && !reduce) {
+      var fio = new IntersectionObserver(function (es) {
+        if (es[0].isIntersecting) { fio.disconnect(); playIn(); }
+      }, { threshold: 0.3 });
+      fio.observe(fan);
+    } else {
+      fan.classList.add('played');
+    }
+  }
+
+  /* 3. Terminal: mulai sekali saat terlihat */
+  var term = document.getElementById('term');
+  if (term && hasIO && !reduce) {
+    var tio = new IntersectionObserver(function (es) {
+      if (es[0].isIntersecting) { tio.disconnect(); term.classList.add('play'); }
+    }, { threshold: 0.6 });
+    tio.observe(term);
+  }
+
+  /* 4. Rel progres tutorial */
+  var steps = document.querySelectorAll('ol.steps > li');
+  if (hasIO && steps.length) {
+    var idx = -1;
+    var paint = function () {
+      each(steps, function (li, j) {
+        li.classList.toggle('is-done', j < idx);
+        li.classList.toggle('is-active', j === idx);
+      });
+    };
+    var band = '-38% 0px -57% 0px';
+    var sio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) { idx = Array.prototype.indexOf.call(steps, e.target); paint(); }
+      });
+    }, { rootMargin: band });
+    each(steps, function (li) { sio.observe(li); });
+    // di atas daftar -> belum ada yang aktif; di bawah daftar -> semua selesai
+    var oio = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) { idx = e.boundingClientRect.top > 0 ? -1 : steps.length - 1; paint(); }
+      });
+    }, { rootMargin: band });
+    oio.observe(document.querySelector('ol.steps'));
+  }
+
+  /* 5. Scrollspy navigasi */
+  var links = document.querySelectorAll('nav a[href^="#"]');
+  if (hasIO && links.length) {
+    var map = {};
+    each(links, function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var spy = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        each(links, function (a) { a.removeAttribute('aria-current'); });
+        var a = map[e.target.id];
+        if (a) a.setAttribute('aria-current', 'location');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    each(document.querySelectorAll('main section[id], #top'), function (el) { spy.observe(el); });
+  }
+})();
+</script>
+</body>
+</html>

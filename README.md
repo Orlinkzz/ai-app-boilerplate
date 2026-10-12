@@ -20,6 +20,8 @@ Satu aturan (`AGENTS.md`), dibaca oleh banyak AI.
 > Tabel ini disusun dari dokumentasi tiap tool dan **belum diuji langsung di semua tool**.
 > Jika ada yang tidak bekerja, buka issue.
 
+**Tutorial lengkap online:** https://orlinkzz.github.io/ai-app-boilerplate/
+
 ## Mulai Cepat
 
 **Prasyarat:** `git`, `make`, dan `bash`. Di Windows gunakan **WSL** atau **Git Bash**.
@@ -102,6 +104,12 @@ Aktifkan dengan menghapus tanda `#` di barisnya, lalu jalankan `make sync-ai`. C
 Tool yang sudah membaca `AGENTS.md` tidak perlu apa-apa. Jika butuh file sendiri, tambahkan sebagai baris
 dikomentari di `.ai-sync-targets`. Untuk format khusus (mis. frontmatter), ubah fungsi `render()` di
 `scripts/sync-ai-rules.sh` dan tambahkan skenario tes di `tests/test-sync.sh`.
+
+## Situs Dokumentasi
+
+Folder `site/` berisi halaman tutorial statis (HTML murni, tanpa build) yang diterbitkan ke GitHub Pages oleh
+`.github/workflows/pages.yml`. Aktifkan di Settings → Pages → Source: **GitHub Actions**. Workflow-nya hanya jalan di
+repo template ini. Di repo turunan, hapus `site/` dan `pages.yml` jika tidak dipakai.
 
 ## Catatan
 

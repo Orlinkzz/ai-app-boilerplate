@@ -4,6 +4,9 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/), versi mengikut
 
 ## [Unreleased]
 
+### Added
+- Situs tutorial statis di `site/` (SEO: meta, Open Graph, JSON-LD, sitemap, robots) dan workflow `pages.yml` untuk GitHub Pages
+
 ## [1.0.0] - 2026-10-08
 
 ### Added
