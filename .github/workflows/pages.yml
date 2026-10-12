@@ -2,7 +2,8 @@ name: Deploy Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
     paths:
       - "site/**"
       - ".github/workflows/pages.yml"
@@ -28,19 +29,31 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v7
 
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      - name: Verify site directory
+        run: |
+          if [ ! -d "site" ]; then
+            echo "::error::Folder site/ tidak ditemukan."
+            exit 1
+          fi
 
-      - name: Upload Pages artifact
+          if [ ! -f "site/index.html" ]; then
+            echo "::error::File site/index.html tidak ditemukan."
+            exit 1
+          fi
+
+          echo "Isi folder site/:"
+          ls -la site/
+
+      - name: Setup GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload site directory
         uses: actions/upload-pages-artifact@v4
         with:
-          path: site
+          path: ./site
 
       - name: Deploy to GitHub Pages
         id: deployment
