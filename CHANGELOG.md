@@ -10,7 +10,9 @@ Format mengikuti [Keep a Changelog](https://keepachangelog.com/), versi mengikut
 - Prompt baru: `00-idea-to-prd` (AI mewawancarai pengguna), `03-break-into-tasks`, `09-deploy`, `10-iterate`, `where-am-i`
 - `make status` (`scripts/status.sh`) menebak tahap proyek dan menyarankan langkah berikutnya, dengan tes `tests/test-status.sh`
 - Perintah Claude Code `/status`
-- `examples/kas-kelas/`: contoh proyek yang sudah melewati tahap 0-4, termasuk satu putaran plan → implement → review
+- `examples/`: dua contoh proyek yang sudah melewati tahap 0-4, masing-masing dengan satu putaran
+  plan → implement → review: `kas-kelas` (tanpa backend) dan `pos-warung` (SvelteKit + SQLite, login dua peran,
+  audit keamanan yang menemukan manipulasi harga, qty negatif, dan race condition stok)
 - Panduan memilih stack dan jenis hosting di `stacks/README.md`
 - Bagian "Arah & Tahap Proyek" di `AGENTS.md`: AI tidak menulis kode aplikasi selama PRD masih placeholder,
   dan menutup jawaban dengan langkah berikutnya

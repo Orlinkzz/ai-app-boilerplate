@@ -88,4 +88,5 @@ kembali ke tahap 4.
 - AI terus menambah fitur yang tidak diminta → ingatkan scope task, atau mulai sesi baru.
 - Tidak tahu kenapa kodenya bekerja → minta AI menjelaskan sebelum lanjut. Kamu yang bertanggung jawab atas kode itu.
 
-Contoh proyek yang sudah melewati tahap 0-4 ada di [`examples/kas-kelas/`](../examples/kas-kelas/).
+Contoh proyek yang sudah melewati tahap 0-4 ada di [`examples/`](../examples/): `kas-kelas` (aplikasi kecil
+tanpa backend) dan `pos-warung` (kasir dengan login, database, dan audit keamanan).

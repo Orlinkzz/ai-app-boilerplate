@@ -12,7 +12,7 @@ Template ini memberimu:
 - **Prompt siap pakai** untuk tiap tahap, bisa dipakai di AI mana pun ([`prompts/`](prompts/))
 - **Aturan untuk AI** dalam satu file (`AGENTS.md`) yang dibaca banyak tool, termasuk aturan agar AI tidak langsung coding sebelum arahnya jelas
 - **`make status`**: kapan pun bingung, perintah ini memberi tahu kamu sedang di tahap mana dan langkah berikutnya
-- **Contoh proyek** yang sudah melewati semua tahap ([`examples/kas-kelas/`](examples/kas-kelas/))
+- **Contoh proyek** yang sudah melewati tahap 0-4 ([`examples/`](examples/)): aplikasi kas kelas tanpa backend, dan aplikasi kasir (POS) warung dengan login dan database
 - **Template stack** (React, Vue, Svelte, Node.js, Bun, Go, Laravel) plus git hook dan CI yang menjaga proyek tetap rapi
 
 **Tutorial lengkap online:** https://orlinkzz.github.io/ai-app-boilerplate/
