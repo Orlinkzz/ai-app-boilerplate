@@ -19,6 +19,36 @@ Yang diubah oleh `make init`:
 Aman dijalankan ulang (hasilnya sama) dan bisa dipakai untuk berganti stack. Setelah itu buat proyeknya
 sesuai bagian *Scaffold awal* di `AGENTS.md` (template ini tidak membuatkan kode aplikasi).
 
+## Memilih stack
+
+Pilih stack **setelah** PRD selesai (lihat `docs/ROADMAP.md`, tahap 2). `prompts/02-design-architecture.md`
+akan merekomendasikan stack berdasarkan PRD; tabel ini membantu kamu menilai rekomendasinya.
+
+| Mau bikin apa | Stack yang cocok | Kenapa |
+|---|---|---|
+| Situs/aplikasi web interaktif, data cukup di browser atau layanan pihak ketiga | `react`, `vue`, atau `svelte` | Hanya frontend, paling mudah di-hosting gratis |
+| Web dengan halaman + backend dalam satu proyek (form, login, database) | `svelte` (SvelteKit) | Satu framework untuk halaman dan server |
+| API/backend saja, atau bot (mis. bot WhatsApp/Telegram) | `nodejs`, `bun`, atau `go` | Ringan; Go paling hemat resource, Node.js paling banyak contoh |
+| Aplikasi bisnis dengan banyak form, CRUD, dan role pengguna | `laravel-react` | Laravel menyediakan auth, migration, validasi siap pakai (template ini **belum diuji**) |
+
+Aturan praktis:
+- Sudah menguasai salah satunya? **Pakai yang sudah kamu kuasai.** Kamu harus bisa membaca dan me-review kode dari AI.
+- Belum menguasai apa pun dan ini proyek web? Mulai dari `react` atau `svelte`: contoh dan bantuan AI paling banyak.
+- Ragu antara frontend saja atau perlu backend? Tanyakan: apakah data harus tersimpan dan dibagi antar pengguna?
+  Jika ya, kamu butuh backend + database.
+
+### Tempat hosting (tahap 5)
+
+Gambaran umum saja. Harga, batas paket gratis, dan fiturnya sering berubah; selalu cek situs resminya
+dan pakai `prompts/09-deploy.md` untuk memilih.
+
+| Stack | Jenis hosting yang cocok |
+|---|---|
+| `react`, `vue` | Hosting situs statis (mis. GitHub Pages, Netlify, Vercel, Cloudflare Pages) |
+| `svelte` | Hosting statis jika tanpa server; platform dengan adapter SvelteKit jika memakai fitur server |
+| `nodejs`, `bun`, `go` | Platform aplikasi/container (PaaS) atau VPS |
+| `laravel-react` | Hosting PHP, PaaS yang mendukung PHP, atau VPS |
+
 ## Stack yang tersedia
 
 | Stack | Scaffold awal | `make lint` menjalankan | Status uji |

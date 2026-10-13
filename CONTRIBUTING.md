@@ -39,6 +39,18 @@ bash tests/e2e-stacks.sh react   # contoh; butuh jaringan dan toolchain stack te
 
 Sebutkan versi toolchain yang kamu pakai di deskripsi PR.
 
+## Menambah atau mengubah prompt dan peta jalan
+
+Prompt di `prompts/` bernomor sesuai tahap di `docs/ROADMAP.md`. Jika menambah, menghapus, atau mengganti nomor
+prompt, perbarui juga:
+
+- `docs/ROADMAP.md` dan tabel *Peta Jalan* di `README.md`
+- rujukan "Langkah berikutnya" di prompt lain, `AGENTS.md`, dan `scripts/status.sh`
+- tutorial di `site/index.html`
+
+Setiap prompt diawali komentar yang menyebut tahapnya, dan diakhiri bagian **Langkah berikutnya** agar
+pengguna tidak kehilangan arah. Jika logika `scripts/status.sh` berubah, perbarui `tests/test-status.sh`.
+
 ## Melaporkan bug
 
 Sertakan sistem operasi, versi `git`/`bash`/`make`, perintah yang dijalankan, dan output lengkapnya.
@@ -49,7 +61,7 @@ Untuk kerentanan keamanan, ikuti [SECURITY.md](SECURITY.md), jangan buka issue p
 Gunakan WSL atau Git Bash. Di Windows, izin eksekusi script bisa hilang saat commit. Perbaiki dengan:
 
 ```bash
-git update-index --chmod=+x scripts/sync-ai-rules.sh scripts/hooks/pre-commit tests/test-sync.sh
+git update-index --chmod=+x scripts/*.sh scripts/hooks/pre-commit tests/*.sh
 ```
 
 Cek hasilnya dengan `git ls-files -s scripts tests` (kolom pertama harus `100755`).

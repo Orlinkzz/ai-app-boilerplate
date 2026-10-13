@@ -1,8 +1,11 @@
 .DEFAULT_GOAL := help
-.PHONY: help setup hooks deps dev test lint build sync-ai check-ai selftest init stacks
+.PHONY: help status setup hooks deps dev test lint build sync-ai check-ai selftest init stacks
 
 help:
+	@echo "Bingung mulai dari mana? Jalankan: make status   (peta lengkap: docs/ROADMAP.md)"
+	@echo
 	@echo "Target tersedia:"
+	@echo "  make status    Tebak tahap proyek sekarang dan sarankan langkah berikutnya"
 	@echo "  make setup     Aktifkan git hook + install dependency"
 	@echo "  make deps      Install dependency saja"
 	@echo "  make dev       Jalankan mode development"
@@ -31,16 +34,16 @@ deps:
 	@echo "[TODO] 'make deps' belum dikonfigurasi (install dependency). Isi di Makefile atau jalankan: make init STACK=<nama>"
 
 dev:
-	@echo "[TODO] 'make dev' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; exit 1
+	@echo "[TODO] 'make dev' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; echo "       Gagal di awal itu normal. Langkah berikutnya: make status" >&2; exit 1
 
 test:
-	@echo "[TODO] 'make test' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; exit 1
+	@echo "[TODO] 'make test' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; echo "       Gagal di awal itu normal (CI juga merah sampai T-001 selesai). Langkah berikutnya: make status" >&2; exit 1
 
 lint:
-	@echo "[TODO] 'make lint' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; exit 1
+	@echo "[TODO] 'make lint' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; echo "       Gagal di awal itu normal (CI juga merah sampai T-001 selesai). Langkah berikutnya: make status" >&2; exit 1
 
 build:
-	@echo "[TODO] 'make build' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; exit 1
+	@echo "[TODO] 'make build' belum dikonfigurasi. Isi di Makefile atau jalankan: make init STACK=<nama>" >&2; echo "       Gagal di awal itu normal. Langkah berikutnya: make status" >&2; exit 1
 # STACK-TARGETS:END
 
 sync-ai:
@@ -52,6 +55,7 @@ check-ai:
 selftest:
 	@bash tests/test-sync.sh
 	@bash tests/test-init.sh
+	@bash tests/test-status.sh
 
 init:
 	@[ -n "$(STACK)" ] || { echo "Pemakaian: make init STACK=<nama>   (daftar: make stacks)" >&2; exit 1; }
@@ -59,3 +63,6 @@ init:
 
 stacks:
 	@bash scripts/init-stack.sh --list
+
+status:
+	@bash scripts/status.sh

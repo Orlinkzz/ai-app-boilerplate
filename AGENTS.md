@@ -7,15 +7,15 @@
 <!-- TEMPLATE-NOTE:START — hapus blok ini setelah AGENTS.md diisi untuk proyekmu -->
 > **Catatan template:** repo ini adalah *template*. Bagian `<...>` di bawah adalah placeholder yang harus
 > diisi untuk proyekmu; sampai itu dilakukan, `make dev/test/lint/build` sengaja gagal.
-> Pilih stack dengan `make stacks` lalu `make init STACK=<nama>`.
+> Urutan pengisiannya ada di `docs/ROADMAP.md` (PRD dulu, lalu arsitektur, baru `make init STACK=<nama>`).
 > Jika kamu AI agent yang diminta mengembangkan template ini sendiri (bukan sebuah aplikasi), abaikan
-> placeholder dan baca `README.md` serta `CONTRIBUTING.md`.
+> placeholder dan bagian "Arah & Tahap Proyek", lalu baca `README.md` serta `CONTRIBUTING.md`.
 <!-- TEMPLATE-NOTE:END -->
 
 ## Project
 - Nama: ai-app-boilerplate
 - Tujuan: <1 kalimat: masalah apa, untuk siapa>
-- Status: MVP
+- Tahap: 0 — Ide (lihat `docs/ROADMAP.md`; perbarui setiap pindah tahap)
 
 ## Tech Stack
 - Backend: <isi, mis. Laravel / Bun+Hono / FastAPI>
@@ -30,15 +30,31 @@ Semua perintah lewat `make` (isi implementasinya di `Makefile`, jaga agar tetap 
 - Test: `make test`
 - Lint/format: `make lint`
 - Build: `make build`
+- Cek tahap proyek: `make status`
 - Sync salinan legacy (hanya jika `.ai-sync-targets` aktif): `make sync-ai`
 
 ## Struktur Proyek
 ```
 src/        kode aplikasi
 tests/      test
-docs/       PRD, arsitektur, keputusan, daftar task
-prompts/    template prompt reusable
+docs/       ROADMAP, PRD, arsitektur, keputusan, daftar task
+prompts/    template prompt reusable, berurutan sesuai tahap
+examples/   contoh proyek yang sudah jadi (BUKAN spesifikasi proyek ini)
 ```
+
+## Arah & Tahap Proyek
+Proyek ini mengikuti tahapan di `docs/ROADMAP.md`. Sebelum mengerjakan permintaan apa pun, pastikan tahapnya cocok:
+- Jika `docs/PRD.md` masih berisi placeholder `<...>`: **jangan menulis kode aplikasi.** Jelaskan bahwa PRD
+  perlu diisi dulu dan arahkan ke `prompts/00-idea-to-prd.md`.
+- Jika PRD sudah terisi tetapi `docs/ARCHITECTURE.md` belum: bantu desain arsitektur dulu (`prompts/02-design-architecture.md`).
+- Jika arsitektur sudah ada tetapi `docs/TASKS.md` belum dipecah dari PRD: bantu memecah task dulu
+  (`prompts/03-break-into-tasks.md`).
+- Permintaan di luar task aktif: sampaikan, dan tawarkan untuk mencatatnya sebagai task baru di Backlog.
+- Pengguna boleh secara eksplisit meminta melewati aturan ini (mis. untuk eksperimen); patuhi, tapi ingatkan sekali.
+- Isi `examples/` hanyalah contoh. Jangan menganggapnya sebagai kebutuhan proyek ini.
+
+Di akhir setiap jawaban yang menyelesaikan sesuatu, tulis satu baris **Langkah berikutnya** yang konkret
+(prompt mana yang dipakai atau perintah apa yang dijalankan).
 
 ## Alur Kerja Wajib
 1. Baca `docs/PRD.md`, `docs/ARCHITECTURE.md`, dan task aktif di `docs/TASKS.md` sebelum menulis kode.
@@ -48,6 +64,7 @@ prompts/    template prompt reusable
 5. Jalankan test + lint sebelum menyatakan selesai. Laporkan hasil sebenarnya, jangan mengarang.
 6. Commit kecil dan sering dengan pesan jelas (Conventional Commits: `feat:`, `fix:`, `chore:`).
 7. Catat keputusan arsitektur penting di `docs/DECISIONS.md`.
+8. Setelah task selesai: centang di `docs/TASKS.md` dan perbarui dokumen di `docs/` yang tidak lagi sesuai dengan kode.
 
 ## Aturan Kode
 - Ikuti konvensi yang sudah ada di repo; jangan memperkenalkan pola baru tanpa alasan.
@@ -71,3 +88,4 @@ prompts/    template prompt reusable
 
 ## Jika Tidak Yakin
 Bertanya lebih baik daripada menebak. Sebutkan asumsi secara eksplisit di jawaban.
+Jika pengguna terlihat bingung harus ngapain, jalankan atau sarankan `make status` / `prompts/where-am-i.md`.

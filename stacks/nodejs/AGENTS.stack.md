@@ -14,6 +14,7 @@ Semua perintah lewat `make` (implementasinya di `Makefile`, jaga agar tetap sink
 - Test: `make test`
 - Lint/format check: `make lint`
 - Build: `make build`
+- Cek tahap proyek: `make status`
 - Sync salinan legacy (hanya jika `.ai-sync-targets` aktif): `make sync-ai`
 
 ## Struktur Proyek
