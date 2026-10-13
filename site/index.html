@@ -9,7 +9,7 @@
 <meta name="keywords" content="AGENTS.md, AI coding, Claude Code, Codex, Cursor, GitHub Copilot, Gemini CLI, boilerplate, template repo, AI-assisted development">
 <meta name="author" content="Orlinkzz">
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
-<meta name="theme-color" content="#f1ece2">
+<meta name="theme-color" content="#f2ede4">
 <meta name="color-scheme" content="light">
 <link rel="canonical" href="https://orlinkzz.github.io/ai-app-boilerplate/">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -107,10 +107,10 @@
 <style>
 :root{
   color-scheme:light;
-  --bg:#f1ece2; --fg:#2e2b26; --muted:#6b6458; --card:#f6f2ea; --line:#e2d9c8;
-  --accent:#4a45b5; --accent-fg:#f6f2ea; --accent-soft:#e8e1d2;
-  --code-bg:#ebe4d6; --code-fg:#2e2b26; --code-line:#ddd3c0; --code-muted:#6b6458;
-  --ok:#2f6f62; --warn:#94461a; --warn-bg:#f2e5cf; --note-bg:#ebe5d8;
+  --bg:#f2ede4; --fg:#2f2a24; --muted:#6e665a; --card:#f7f3ec; --line:#e3dacb;
+  --accent:#3d362e; --accent-fg:#f7f3ec; --accent-soft:#e9e2d5;
+  --code-bg:#ece5d8; --code-fg:#2f2a24; --code-line:#dfd5c3; --code-muted:#6e665a;
+  --ok:#2f2a24; --warn:#7a5233; --warn-bg:#eee3d0; --note-bg:#ece6da;
   --shadow:0 1px 2px rgba(74,62,40,.05),0 4px 14px rgba(74,62,40,.05);
   --radius:12px; --maxw:960px;
   --sans:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
@@ -120,7 +120,7 @@
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;background:var(--bg)}
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
-::selection{background:#e0d3ba;color:var(--fg)}
+::selection{background:#e2d6c0;color:var(--fg)}
 a{color:var(--accent);text-underline-offset:3px;text-decoration-thickness:1px}
 a:hover{text-decoration-thickness:2px}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
@@ -172,7 +172,7 @@ td code,li code,p code{font-family:var(--mono);font-size:.88em;background:var(--
 
 .codeblock{position:relative;margin:12px 0 16px}
 pre{margin:0;background:var(--code-bg);color:var(--code-fg);padding:16px 18px;border:1px solid var(--code-line);border-radius:var(--radius);overflow-x:auto;font-family:var(--mono);font-size:14.5px;line-height:1.6}
-pre code{background:none;padding:0;font-size:inherit;color:inherit}
+pre code{background:none;border:0;padding:0;font-size:inherit;color:inherit}
 .codeblock pre{padding-right:96px}
 .copy{position:absolute;top:9px;right:9px;display:inline-flex;align-items:center;gap:6px;font:600 12px var(--sans);padding:5px 10px 5px 8px;border-radius:8px;border:1px solid var(--code-line);background:var(--card);color:var(--muted);cursor:pointer;transition:background-color .15s ease,border-color .15s ease,color .15s ease}
 .copy:hover{background:var(--bg);color:var(--fg);border-color:var(--muted)}
@@ -328,7 +328,7 @@ ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:32px;top:5
 <header class="site">
   <div class="wrap">
     <a class="brand" href="#top" aria-label="AI App Boilerplate, kembali ke atas">
-      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#4a45b5"/><path d="M9 22l5-12 5 12M11 18h6" stroke="#f6f2ea" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23" cy="10" r="2.2" fill="#f6f2ea"/></svg>
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#3d362e"/><path d="M9 22l5-12 5 12M11 18h6" stroke="#f7f3ec" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="23" cy="10" r="2.2" fill="#f7f3ec"/></svg>
       AI App Boilerplate
     </a>
     <nav aria-label="Navigasi utama">
@@ -348,8 +348,8 @@ ol.steps>li:not(:last-child)::after{content:"";position:absolute;left:32px;top:5
   <div class="hero" id="top">
     <div class="wrap">
       <span class="eyebrow">Template repo &middot; MIT</span>
-      <h1>Satu <code style="font-family:var(--mono)">AGENTS.md</code> untuk banyak AI coding tool</h1>
-      <p class="lead">Dari ide sampai aplikasi dipakai orang, dengan AI coding tool apa pun. Peta jalan bertahap, prompt siap pakai untuk tiap tahap, satu file aturan untuk semua AI, plus git hook dan CI yang menjaga proyekmu tetap rapi.</p>
+      <h1>Dari ide sampai aplikasi jadi, bersama AI apa pun</h1>
+      <p class="lead">Peta jalan bertahap, prompt siap pakai untuk tiap tahap, dan satu file aturan yang dibaca Claude Code, Codex, Cursor, Copilot, Gemini CLI, dan lainnya. Plus git hook dan CI yang menjaga proyekmu tetap rapi.</p>
       <div class="cta">
         <a class="btn" href="https://github.com/Orlinkzz/ai-app-boilerplate/generate" rel="noopener">Use this template</a>
         <a class="btn ghost" href="#mulai">Mulai tutorial</a>
